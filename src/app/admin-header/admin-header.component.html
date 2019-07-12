@@ -1,0 +1,97 @@
+<!--<div class="container">-->
+  <!--<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">-->
+    <!--<a class="navbar-brand" href="/"><img alt="Brand" src="assets/img/pivot.png"></a>-->
+    <!--<ul class="nav navbar-nav">-->
+      <!--<li class="nav-item">-->
+        <!--<a class="nav-link" href="#">About</a>-->
+      <!--</li>-->
+      <!--<li class="nav-item">-->
+        <!--<div ngbDropdown>-->
+          <!--<button class="btn" ngbDropdownToggle>Projects</button>-->
+          <!--<div class="dropdown-menu">-->
+            <!--<button class="dropdown-item"  >AA</button>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</li>-->
+    <!--</ul>-->
+  <!--</nav>-->
+<!--</div>-->
+
+
+<nav class="navbar navbar-default navbar-fixed-top" >
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#admin-nav"
+              aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"><img alt="Brand" src="/img/pivot.png"></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="admin-nav">
+      <ul class="nav navbar-nav navbar-right" *ngIf="!isMobile">
+        <li class="dropdown" uib-dropdown is-open="developerMenu.isOpen" *ngIf="user.hasRole('Developer')">
+          <a class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button"
+             aria-haspopup="true" aria-expanded="false">Developer Tools <span class="caret"></span></a>
+          <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="developer-dropdown">
+
+          </ul>
+        </li>
+        <li><a href="#!/clientSearch">Clients</a></li>
+        <li class="dropdown" uib-dropdown is-open="globalconfigMenu.isOpen">
+          <a class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button"
+             aria-haspopup="true" aria-expanded="false">Global Configuration <span class="caret"></span></a>
+          <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+              aria-labelledby="manage-admin-users-dropdown">
+            <li><a href="#!/rssManagement">RSS Management</a></li>
+          </ul>
+        </li>
+        <li><a href="#!/administratorSearch">Administrators</a></li>
+        <li class="dropdown" uib-dropdown is-open="globalSearchMenu.isOpen">
+          <a class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button"
+             aria-haspopup="true" aria-expanded="false">
+            <i class="icon icon-magnifier"></i>
+          </a>
+          <ul class="dropdown-menu globalSearch" uib-dropdown-menu role="menu"
+              aria-labelledby="single-button">
+            <li role="menuitem" class="search input-group">
+              <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+              <!-- This binds to $parent because uib-dropdown (above) makes a new scope and our model gets clobbered -->
+              <input class="form-control clientSearchInput" type="text" ng-model="globalSearchQuery"
+                     on-standard-search="globalSearch()" placeholder="Search for anything..."
+                     ng-click="$event.stopPropagation();">
+            </li>
+            <div class="globalSearchResultSpacer" *ngIf="globalSearchResults.length > 0"></div>
+            <li role="menuitem" ng-repeat="result in globalSearchResults">
+              <a href="{{result.url}}">
+                <i *ngIf="result.type==='user'" class="icon icon-user"></i>
+                <i *ngIf="result.type==='client'" class="icon icon-globe"></i>
+                <i *ngIf="result.type==='program'" class="icon icon-fire"></i>
+                {{result.display}}
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown" ngbDropdown is-open="userMenu.isOpen" id="adminUserMenu">
+          <a class="dropdown-toggle"  ngbDropdownToggle data-toggle="dropdown" role="button"
+             aria-haspopup="true" aria-expanded="false">
+            <span>{{ user.firstName }} {{ user.lastName }} (aka {{userFirstName}} )</span>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu role="menu" aria-labelledby="single-button">
+            <li><a href="" ng-click="logout()">Log Out</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" *ngIf="isMobile">
+        <li><a href="" ng-click="logout()">Log Out</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
